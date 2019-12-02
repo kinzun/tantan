@@ -275,6 +275,8 @@ class Moniter(object):
         }
         if value_type == 0:
             params.update({"units": "s"})
+        # if "real" in key_name and not "code" in key_name:
+        #     params.update({"units": "s"})
 
         return self.zapi.item.create(**params)
 
@@ -457,9 +459,12 @@ class Create_Batch(object):
 
         def code_toal_string(real_backend=None):
             """生成监控项所用的，key  , code total"""
-            return [("health_code_{}", "real_health_code[{},{}]"),
-                    ("health_total_{}", "real_health_total[{},{}]")] if real_backend \
-                else [("health_code_{}", "health_code[{}]"), ("health_total_{}", "health_total[{}]")]
+            return [("real_health_code_{}", "real_health_code[{},{}]"),
+                    ("real_health_total_{}", "real_health_total[{},{}]")] if real_backend \
+                else [("health_total_{}", "health_total[{}]"), ("health_code_{}", "health_code[{}]"),
+                      ("health_connect_{}", "health_connect[{}]"), ("health_start_{}", "health_start[{}]")]
+
+            # [("health_code_{}", "health_code[{}]"), ("health_total_{}", "health_total[{}]")]
 
         def item_create_(itemname, key_name):
             if "code" in name[0]:
@@ -471,24 +476,23 @@ class Create_Batch(object):
 
         # items = zbix.item_get(key_=it.url)
         for it in urls_info:
-            if it.url[0] == 'https://me.baojia.com/':
-                for name in code_toal_string():
+            # if it.url[0] == 'https://me.baojia.com/':
+            for name in code_toal_string():
+                try:
+                    itemname = name[0].format(it.url[0])
+                    key_name = name[1].format(it.url[0])
+                    item_create_(itemname, key_name)
+                except Exception as e:
+                    print(e)
+
+            for name in code_toal_string(real_backend=True):
+                for i in it.real_host:
                     try:
-                        itemname = name[0].format(it.url[0])
-                        key_name = name[1].format(it.url[0])
+                        itemname = name[0].format(i)
+                        key_name = name[1].format(it.url[0], i)
                         item_create_(itemname, key_name)
                     except Exception as e:
                         print(e)
-
-                for name in code_toal_string(real_backend=True):
-                    for i in it.real_host:
-                        try:
-                            itemname = name[0].format(i)
-                            key_name = name[1].format(it.url[0], i)
-                            item_create_(itemname, key_name)
-                        except Exception as e:
-                            print(e)
-                break
 
     @staticmethod
     def domain_search():
@@ -547,44 +551,43 @@ class Create_Batch(object):
         it = url_info(name='bike-bike', url=['https://me.baojia.com/'], return_msg=['没有相关操作权限'], code=[200],
                       real_host=['10.1.11.140:8080', '10.1.11.220:8080', '10.1.11.221:8080'])
 
-        # for it in urls_info:
-        # 获取所有 域名下 后端的真实主机
-        try:
-            items_domainip_color = [
-                {'itemid': i.get('itemid'), 'yaxisside': 1 if "health_code_http" in i.get('name') else 0} for i in
-                zbix.item_get(name=it.url[0])]
-            pprint(items_domainip_color)
+        for it in urls_info:
+            # 获取所有 域名下 后端的真实主机
+            try:
+                # 域名 url
+                items_domainip_color = [
+                    {'itemid': i.get('itemid'), 'yaxisside': 1 if "health_code_http" in i.get('name') else 0} for i in
+                    zbix.item_get(name=it.url[0])]
 
-            # 域名 url
-            res = zbix.graph_create(name=f"{it.name}_{it.url[0]}_test2", gitems=items_domainip_color)
-            print(res)
-            all_items_color = [{"color": _} for _ in zbix.choose_color[:len(items_domainip_color)]]
+                all_items_color = [{"color": _} for _ in zbix.choose_color[:len(items_domainip_color)]]
 
-            # 后端真实主机监控
-            items_real = (zbix.item_get(key_=_) for _ in it.real_host)
-            # [items_domainip_color.append(
-            #     {'itemid': item.get('itemid'), 'yaxisside': 1 if "health_code" in item.get('name') else 0}) for i
-            [{'itemid': item.get('itemid'), 'yaxisside': 1 if "health_code" in item.get('name') else 0} for i
-             in
-             items_real for item in i]
-            all_items_color = [{"color": _} for _ in zbix.choose_color[:len(items_domainip_color)]]
-            for i in range(len(items_domainip_color)):
-                items_domainip_color[i].update(all_items_color[i])
+                for i in range(len(items_domainip_color)):
+                    items_domainip_color[i].update(all_items_color[i])
 
-            res = zbix.graph_create(name=f"{it.name}_{it.url[0]}_test2", gitems=items_domainip_color)
-            print(res)
+                res = zbix.graph_create(name=f"{it.name}_{it.url[0]}", gitems=items_domainip_color)
 
-        except  Exception as e:
-            print(e)
-            pass
+                # 后端真实主机监控
+                items_real = (zbix.item_get(name=_) for _ in it.real_host)
+                realend_items = [
+                    {'itemid': item.get('itemid'), 'yaxisside': 1 if "health_code" in item.get('name') else 0}
+                    for i in items_real for item in i]
+                real_end_color = [{"color": _} for _ in zbix.choose_color[:len(realend_items)]]
+                for i in range(len(realend_items)):
+                    realend_items[i].update(real_end_color[i])
+
+                res = zbix.graph_create(name=f"realend_{it.name}_{it.url[0]}", gitems=realend_items)
+                print(res)
+
+            except  Exception as e:
+                print(e)
+                pass
 
 
 if __name__ == '__main__':
     from pprint import pprint
 
     mutil_cr = Create_Batch()
-    # mutil_cr.crate_batch_mhost()
-    # mutil_cr.crate_mhost_grpaph()
+    mutil_cr.crate_batch_mhost()
     mutil_cr.crete_mhost_graph_()
 
     # mutil_cr.items_del()
