@@ -1,0 +1,1025 @@
+{
+    "": {
+        "code": 599,
+        "message": "<url> malformed",
+        "total": "",
+        "url": ""
+    },
+    "211.151.2.246:38026": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.236": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.236 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.236"
+            },
+            "10.1.11.237": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.237 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.237"
+            }
+        },
+        "code": 200,
+        "connect": 0.007399,
+        "namelookup": 0.002266,
+        "pretransfer": 0.007425,
+        "queue": 2.86102294921875e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.013082,
+        "total": 0.013129,
+        "url": "211.151.2.246:38026"
+    },
+    "47.95.170.94:8677": {
+        "appconnect": 0.0,
+        "code": 404,
+        "connect": 0.006717,
+        "message": "Not Found",
+        "namelookup": 0.0001,
+        "pretransfer": 0.006738,
+        "queue": 0.01874518394470215,
+        "redirect": 0.0,
+        "starttransfer": 0.015245,
+        "total": 0.015293,
+        "url": "47.95.170.94:8677"
+    },
+    "47.95.64.117": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "39.97.116.162": {
+                "code": 599,
+                "message": "Failed to connect to 39.97.116.162 port 80: Connection refused",
+                "total": "",
+                "url": "39.97.116.162"
+            },
+            "47.93.233.156": {
+                "code": 599,
+                "message": "Failed to connect to 47.93.233.156 port 80: Connection refused",
+                "total": "",
+                "url": "47.93.233.156"
+            },
+            "47.95.141.193": {
+                "code": 599,
+                "message": "Failed to connect to 47.95.141.193 port 80: Connection refused",
+                "total": "",
+                "url": "47.95.141.193"
+            },
+            "47.95.208.22": {
+                "code": 599,
+                "message": "Failed to connect to 47.95.208.22 port 80: Connection refused",
+                "total": "",
+                "url": "47.95.208.22"
+            },
+            "47.95.229.74": {
+                "code": 599,
+                "message": "Failed to connect to 47.95.229.74 port 80: Connection refused",
+                "total": "",
+                "url": "47.95.229.74"
+            },
+            "47.95.233.109": {
+                "code": 599,
+                "message": "Failed to connect to 47.95.233.109 port 80: Connection refused",
+                "total": "",
+                "url": "47.95.233.109"
+            }
+        },
+        "code": 200,
+        "connect": 0.004316,
+        "namelookup": 9.9e-05,
+        "pretransfer": 0.00434,
+        "queue": 0.016083955764770508,
+        "redirect": 0.0,
+        "starttransfer": 0.011899,
+        "total": 0.011979,
+        "url": "47.95.64.117"
+    },
+    "47.95.69.153:8678": {
+        "appconnect": 0.0,
+        "code": 404,
+        "connect": 0.004445,
+        "message": "Not Found",
+        "namelookup": 9.5e-05,
+        "pretransfer": 0.004469,
+        "queue": 0.02821516990661621,
+        "redirect": 0.0,
+        "starttransfer": 0.010614,
+        "total": 0.010662,
+        "url": "47.95.69.153:8678"
+    },
+    "http://10.1.11.160:8081/cat/r": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.160": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.160 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.160"
+            }
+        },
+        "code": 200,
+        "connect": 0.004417,
+        "namelookup": 9.6e-05,
+        "pretransfer": 0.00445,
+        "queue": 0.013203859329223633,
+        "redirect": 0.0,
+        "starttransfer": 0.018647,
+        "total": 0.029204,
+        "url": "http://10.1.11.160:8081/cat/r"
+    },
+    "http://10.1.11.166:8899/api/jobs/config/baojia.task.RentOrderIllegalDataflowJob": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.166": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.166 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.166"
+            }
+        },
+        "code": 200,
+        "connect": 0.003962,
+        "namelookup": 0.000167,
+        "pretransfer": 0.003992,
+        "queue": 0.008764982223510742,
+        "redirect": 0.0,
+        "starttransfer": 0.009645,
+        "total": 0.00971,
+        "url": "http://10.1.11.166:8899/api/jobs/config/baojia.task.RentOrderIllegalDataflowJob"
+    },
+    "http://10.1.11.16:8070/signin": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.16": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.16 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.16"
+            }
+        },
+        "code": 200,
+        "connect": 0.008104,
+        "namelookup": 0.002398,
+        "pretransfer": 0.008128,
+        "queue": 4.291534423828125e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.014267,
+        "total": 0.014794,
+        "url": "http://10.1.11.16:8070/signin"
+    },
+    "http://10.1.11.210:8080/info": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.210": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.210 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.210"
+            },
+            "10.1.11.211": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.211 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.211"
+            },
+            "10.1.11.212": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.212 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.212"
+            }
+        },
+        "code": 200,
+        "connect": 0.008144,
+        "namelookup": 0.002573,
+        "pretransfer": 0.008169,
+        "queue": 4.291534423828125e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.01347,
+        "total": 0.013509,
+        "url": "http://10.1.11.210:8080/info"
+    },
+    "http://10.1.11.215:8818/data-job/": {
+        "appconnect": 0.0,
+        "code": 404,
+        "connect": 0.008349,
+        "message": "Not Found",
+        "namelookup": 0.002472,
+        "pretransfer": 0.008369,
+        "queue": 4.0531158447265625e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.014463,
+        "total": 0.014547,
+        "url": "http://10.1.11.215:8818/data-job/"
+    },
+    "http://10.1.11.23:7001": {
+        "appconnect": 0.0,
+        "code": 401,
+        "connect": 0.007919,
+        "message": "Unauthorized",
+        "namelookup": 0.002462,
+        "pretransfer": 0.007945,
+        "queue": 4.0531158447265625e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.013291,
+        "total": 0.013393,
+        "url": "http://10.1.11.23:7001"
+    },
+    "http://10.1.11.27:8081/nodeInf": {
+        "code": 599,
+        "message": "Failed to connect to 10.1.11.27 port 8081: Connection refused",
+        "total": "",
+        "url": "http://10.1.11.27:8081/nodeInf"
+    },
+    "http://10.1.11.31:8080/": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.31": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.31 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.31"
+            }
+        },
+        "code": 200,
+        "connect": 0.007044,
+        "namelookup": 0.002337,
+        "pretransfer": 0.007063,
+        "queue": 3.814697265625e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.012388,
+        "total": 0.012465,
+        "url": "http://10.1.11.31:8080/"
+    },
+    "http://10.1.11.51:8080/index/treadsInfo": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.51": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.51 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.51"
+            },
+            "10.1.11.52": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.52 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.52"
+            }
+        },
+        "code": 200,
+        "connect": 0.007149,
+        "namelookup": 0.002248,
+        "pretransfer": 0.00717,
+        "queue": 5.0067901611328125e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.011758,
+        "total": 0.012059,
+        "url": "http://10.1.11.51:8080/index/treadsInfo"
+    },
+    "http://10.1.11.56:8080/": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.56": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.56 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.56"
+            }
+        },
+        "code": 200,
+        "connect": 0.006756,
+        "namelookup": 0.002342,
+        "pretransfer": 0.006781,
+        "queue": 3.814697265625e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.032087,
+        "total": 0.032129,
+        "url": "http://10.1.11.56:8080/"
+    },
+    "http://10.1.11.58:8080/nodeInf": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.217": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.217 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.217"
+            },
+            "10.1.11.58": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.58 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.58"
+            }
+        },
+        "code": 200,
+        "connect": 0.008357,
+        "namelookup": 0.002474,
+        "pretransfer": 0.008379,
+        "queue": 4.0531158447265625e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.015254,
+        "total": 0.015309,
+        "url": "http://10.1.11.58:8080/nodeInf"
+    },
+    "http://cms.baojia.com/backstage-api/bike/getColorList": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.145": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.145 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.145"
+            },
+            "10.1.11.177": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.177 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.177"
+            }
+        },
+        "code": 200,
+        "connect": 0.168346,
+        "namelookup": 0.13457,
+        "pretransfer": 0.168365,
+        "queue": 3.814697265625e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.285139,
+        "total": 0.285244,
+        "url": "http://cms.baojia.com/backstage-api/bike/getColorList"
+    },
+    "http://creditcrc.baojia.com/crc/verifyIdCardInfo": {
+        "appconnect": 0.0,
+        "code": 405,
+        "connect": 0.08091,
+        "message": "Method Not Allowed",
+        "namelookup": 0.065473,
+        "pretransfer": 0.080985,
+        "queue": 0.014512062072753906,
+        "redirect": 0.0,
+        "starttransfer": 0.182706,
+        "total": 0.182791,
+        "url": "http://creditcrc.baojia.com/crc/verifyIdCardInfo"
+    },
+    "http://distribute.baojia.com/info": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.105": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.105 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.105"
+            },
+            "10.1.11.106": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.106 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.106"
+            },
+            "10.1.11.107": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.107 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.107"
+            },
+            "10.1.11.108": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.108 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.108"
+            },
+            "10.1.11.109": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.109 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.109"
+            },
+            "10.1.11.112": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.112 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.112"
+            },
+            "10.1.11.113": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.113 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.113"
+            },
+            "10.1.11.161": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.161 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.161"
+            },
+            "10.1.11.172": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.172 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.172"
+            }
+        },
+        "code": 200,
+        "connect": 0.082011,
+        "namelookup": 0.065583,
+        "pretransfer": 0.082042,
+        "queue": 0.013753175735473633,
+        "redirect": 0.0,
+        "starttransfer": 0.183462,
+        "total": 0.183528,
+        "url": "http://distribute.baojia.com/info"
+    },
+    "http://dl.baojia.com/auth-api/sys/login": {
+        "appconnect": 0.0,
+        "code": 405,
+        "connect": 0.168262,
+        "message": "Method Not Allowed",
+        "namelookup": 0.134433,
+        "pretransfer": 0.168282,
+        "queue": 4.0531158447265625e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.252067,
+        "total": 0.252168,
+        "url": "http://dl.baojia.com/auth-api/sys/login"
+    },
+    "http://duanxin.baojia.com/sms/sendMsg": {
+        "appconnect": 0.0,
+        "code": 400,
+        "connect": 0.163379,
+        "message": "Bad Request",
+        "namelookup": 0.13437,
+        "pretransfer": 0.163408,
+        "queue": 3.0994415283203125e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.250538,
+        "total": 0.25063,
+        "url": "http://duanxin.baojia.com/sms/sendMsg"
+    },
+    "http://hrms.meboth.com/hrms-api/position/getPositionNameList": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.54": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.54 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.54"
+            },
+            "10.1.11.55": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.55 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.55"
+            }
+        },
+        "code": 200,
+        "connect": 0.021962,
+        "namelookup": 0.017934,
+        "pretransfer": 0.021982,
+        "queue": 3.0994415283203125e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.045451,
+        "total": 0.045554,
+        "url": "http://hrms.meboth.com/hrms-api/position/getPositionNameList"
+    },
+    "http://i.meboth.cn/api/mibuUser/notLogin?userId=-1": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.215": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.215 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.215"
+            }
+        },
+        "code": 200,
+        "connect": 0.081564,
+        "namelookup": 0.066551,
+        "pretransfer": 0.081611,
+        "queue": 4.0531158447265625e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.220267,
+        "total": 0.220372,
+        "url": "http://i.meboth.cn/api/mibuUser/notLogin?userId=-1"
+    },
+    "http://ibs.baojia.com/ibs/api/brandlist?token=111111": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.56": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.56 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.56"
+            }
+        },
+        "code": 200,
+        "connect": 0.168247,
+        "namelookup": 0.134387,
+        "pretransfer": 0.168268,
+        "queue": 4.0531158447265625e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.248632,
+        "total": 0.248755,
+        "url": "http://ibs.baojia.com/ibs/api/brandlist?token=111111"
+    },
+    "http://jk.baojia.com/monitor/bike/getBrandList": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.126": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.126 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.126"
+            },
+            "10.1.11.174": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.174 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.174"
+            }
+        },
+        "code": 200,
+        "connect": 0.081891,
+        "namelookup": 0.066231,
+        "pretransfer": 0.081951,
+        "queue": 0.015340805053710938,
+        "redirect": 0.0,
+        "starttransfer": 0.21988,
+        "total": 0.219972,
+        "url": "http://jk.baojia.com/monitor/bike/getBrandList"
+    },
+    "http://me.baojia.com/bike/get/joinProduct?joinYear=1": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.142": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.142 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.142"
+            },
+            "10.1.11.164": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.164 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.164"
+            },
+            "10.1.11.222": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.222 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.222"
+            },
+            "10.1.11.223": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.223 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.223"
+            },
+            "10.1.11.27": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.27 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.27"
+            }
+        },
+        "code": 200,
+        "connect": 0.147324,
+        "namelookup": 0.13384,
+        "pretransfer": 0.147374,
+        "queue": 4.0531158447265625e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.245834,
+        "total": 0.245938,
+        "url": "http://me.baojia.com/bike/get/joinProduct?joinYear=1"
+    },
+    "http://me.baojia.com/bike/search/adCode?latitude=39&longitude=116": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.141": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.141 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.141"
+            },
+            "10.1.11.162": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.162 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.162"
+            },
+            "10.1.11.218": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.218 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.218"
+            },
+            "10.1.11.219": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.219 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.219"
+            },
+            "10.1.11.26": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.26 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.26"
+            }
+        },
+        "code": 200,
+        "connect": 0.158888,
+        "namelookup": 0.13373,
+        "pretransfer": 0.158918,
+        "queue": 4.0531158447265625e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.265219,
+        "total": 0.265318,
+        "url": "http://me.baojia.com/bike/search/adCode?latitude=39&longitude=116"
+    },
+    "http://me.baojia.com/join/get/joinProduct": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.72": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.72 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.72"
+            }
+        },
+        "code": 200,
+        "connect": 0.167933,
+        "namelookup": 0.134684,
+        "pretransfer": 0.167956,
+        "queue": 5.245208740234375e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.284302,
+        "total": 0.284424,
+        "url": "http://me.baojia.com/join/get/joinProduct"
+    },
+    "http://me.baojia.com/pmall/allProduct": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.230": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.230 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.230"
+            },
+            "10.1.11.232": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.232 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.232"
+            }
+        },
+        "code": 200,
+        "connect": 0.158891,
+        "namelookup": 0.134299,
+        "pretransfer": 0.158914,
+        "queue": 4.291534423828125e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.24515,
+        "total": 0.245285,
+        "url": "http://me.baojia.com/pmall/allProduct"
+    },
+    "http://pj.baojia.com/bikeparts-api/sys/menu/listUserMenus": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.90": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.90 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.90"
+            },
+            "10.1.11.91": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.91 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.91"
+            }
+        },
+        "code": 200,
+        "connect": 0.078956,
+        "namelookup": 0.065237,
+        "pretransfer": 0.079045,
+        "queue": 0.012682914733886719,
+        "redirect": 0.0,
+        "starttransfer": 0.173298,
+        "total": 0.17344,
+        "url": "http://pj.baojia.com/bikeparts-api/sys/menu/listUserMenus"
+    },
+    "http://rider.baojia.com/backstage-company-api/companyusers/list": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.175": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.175 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.175"
+            }
+        },
+        "code": 200,
+        "connect": 0.167907,
+        "namelookup": 0.134665,
+        "pretransfer": 0.167942,
+        "queue": 4.291534423828125e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.25581,
+        "total": 0.255918,
+        "url": "http://rider.baojia.com/backstage-company-api/companyusers/list"
+    },
+    "http://static.meboth.cn/xiaomi/metripapp/20180913/rule.html": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.124": {
+                "appconnect": 0.0,
+                "code": 200,
+                "connect": 0.004557,
+                "namelookup": 9e-06,
+                "pretransfer": 0.004583,
+                "queue": 6.198883056640625e-06,
+                "redirect": 0.0,
+                "starttransfer": 0.009371,
+                "total": 0.009438,
+                "url": "10.1.11.124"
+            },
+            "10.1.11.24": {
+                "appconnect": 1.7e-05,
+                "code": 200,
+                "connect": 1.7e-05,
+                "namelookup": 1.6e-05,
+                "pretransfer": 3.8e-05,
+                "queue": 5.0067901611328125e-06,
+                "redirect": 0.0,
+                "starttransfer": 0.003164,
+                "total": 0.003227,
+                "url": "10.1.11.24"
+            }
+        },
+        "code": 200,
+        "connect": 0.033279,
+        "namelookup": 0.017979,
+        "pretransfer": 0.033306,
+        "queue": 5.1975250244140625e-05,
+        "redirect": 0.0,
+        "starttransfer": 0.04981,
+        "total": 0.050087,
+        "url": "http://static.meboth.cn/xiaomi/metripapp/20180913/rule.html"
+    },
+    "http://wangguan.baojia.com/appQuery/btMac": {
+        "appconnect": 0.0,
+        "code": 200,
+        "connect": 0.080119,
+        "namelookup": 0.066235,
+        "pretransfer": 0.080181,
+        "queue": 0.015483856201171875,
+        "redirect": 0.0,
+        "starttransfer": 0.080182,
+        "total": 0.191689,
+        "url": "http://wangguan.baojia.com/appQuery/btMac"
+    },
+    "http://wechat.baojia.com/zhanggui-java/auth": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.216": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.216 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.216"
+            }
+        },
+        "code": 200,
+        "connect": 0.022183,
+        "namelookup": 0.017613,
+        "pretransfer": 0.022203,
+        "queue": 0.001338958740234375,
+        "redirect": 0.0,
+        "starttransfer": 0.035612,
+        "total": 0.035701,
+        "url": "http://wechat.baojia.com/zhanggui-java/auth"
+    },
+    "http://www.hd.meboth.com": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.124": {
+                "appconnect": 0.0,
+                "code": 200,
+                "connect": 0.004531,
+                "namelookup": 0.000178,
+                "pretransfer": 0.004562,
+                "queue": 5.245208740234375e-06,
+                "redirect": 0.0,
+                "starttransfer": 0.009239,
+                "total": 0.0093,
+                "url": "10.1.11.124"
+            },
+            "10.1.11.24": {
+                "appconnect": 0.0,
+                "code": 200,
+                "connect": 0.003561,
+                "namelookup": 9.2e-05,
+                "pretransfer": 0.003585,
+                "queue": 0.010171175003051758,
+                "redirect": 0.0,
+                "starttransfer": 0.009004,
+                "total": 0.009057,
+                "url": "10.1.11.24"
+            }
+        },
+        "code": 200,
+        "connect": 0.022564,
+        "namelookup": 0.018043,
+        "pretransfer": 0.022587,
+        "queue": 5.245208740234375e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.028428,
+        "total": 0.028534,
+        "url": "http://www.hd.meboth.com"
+    },
+    "http://www.ht.meboth.com/backstage-cupboard-api/sys/index": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.32": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.32 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.32"
+            }
+        },
+        "code": 200,
+        "connect": 0.021207,
+        "namelookup": 0.017319,
+        "pretransfer": 0.021229,
+        "queue": 4.291534423828125e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.040327,
+        "total": 0.040438,
+        "url": "http://www.ht.meboth.com/backstage-cupboard-api/sys/index"
+    },
+    "http://zg.baojia.com/api/get/city/all": {
+        "appconnect": 0.0,
+        "backend_real": {
+            "10.1.11.123": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.123 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.123"
+            },
+            "10.1.11.133": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.133 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.133"
+            },
+            "10.1.11.22": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.22 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.22"
+            }
+        },
+        "code": 200,
+        "connect": 0.080766,
+        "namelookup": 0.06556,
+        "pretransfer": 0.080857,
+        "queue": 0.014252901077270508,
+        "redirect": 0.0,
+        "starttransfer": 0.179511,
+        "total": 0.179761,
+        "url": "http://zg.baojia.com/api/get/city/all"
+    },
+    "https://bat.baojia.com/content/index": {
+        "appconnect": 0.255959,
+        "backend_real": {
+            "10.1.11.32": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.32 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.32"
+            }
+        },
+        "code": 200,
+        "connect": 0.163601,
+        "namelookup": 0.134157,
+        "pretransfer": 0.255981,
+        "queue": 4.0531158447265625e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.333189,
+        "total": 0.333279,
+        "url": "https://bat.baojia.com/content/index"
+    },
+    "https://batops.baojia.com/operation/battery/model/list": {
+        "appconnect": 0.249605,
+        "backend_real": {
+            "10.1.11.213": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.213 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.213"
+            }
+        },
+        "code": 200,
+        "connect": 0.15416,
+        "namelookup": 0.134228,
+        "pretransfer": 0.249631,
+        "queue": 3.814697265625e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.318114,
+        "total": 0.318203,
+        "url": "https://batops.baojia.com/operation/battery/model/list"
+    },
+    "https://me.baojia.com/": {
+        "appconnect": 0.249453,
+        "backend_real": {
+            "10.1.11.140:8080": {
+                "appconnect": 0.0,
+                "code": 200,
+                "connect": 0.004449,
+                "namelookup": 0.000118,
+                "pretransfer": 0.004501,
+                "queue": 9.059906005859375e-06,
+                "redirect": 0.0,
+                "starttransfer": 0.009926,
+                "total": 0.010004,
+                "url": "10.1.11.140:8080"
+            },
+            "10.1.11.220:8080": {
+                "appconnect": 0.0,
+                "code": 200,
+                "connect": 0.004519,
+                "namelookup": 0.000111,
+                "pretransfer": 0.00455,
+                "queue": 8.821487426757812e-06,
+                "redirect": 0.0,
+                "starttransfer": 0.010582,
+                "total": 0.010645,
+                "url": "10.1.11.220:8080"
+            },
+            "10.1.11.221:8080": {
+                "appconnect": 0.0,
+                "code": 200,
+                "connect": 0.004408,
+                "namelookup": 0.000121,
+                "pretransfer": 0.004446,
+                "queue": 6.9141387939453125e-06,
+                "redirect": 0.0,
+                "starttransfer": 0.009688,
+                "total": 0.009785,
+                "url": "10.1.11.221:8080"
+            }
+        },
+        "code": 200,
+        "connect": 0.159182,
+        "namelookup": 0.133545,
+        "pretransfer": 0.24948,
+        "queue": 6.198883056640625e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.31708,
+        "total": 0.317199,
+        "url": "https://me.baojia.com/"
+    },
+    "https://me.baojia.com/bike/about/us?appFrom=1": {
+        "appconnect": 0.255779,
+        "backend_real": {
+            "10.1.11.143": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.143 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.143"
+            },
+            "10.1.11.163": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.163 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.163"
+            },
+            "10.1.11.178": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.178 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.178"
+            },
+            "10.1.11.179": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.179 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.179"
+            },
+            "10.1.11.28": {
+                "code": 599,
+                "message": "Failed to connect to 10.1.11.28 port 80: Connection refused",
+                "total": "",
+                "url": "10.1.11.28"
+            }
+        },
+        "code": 200,
+        "connect": 0.14829,
+        "namelookup": 0.133973,
+        "pretransfer": 0.255806,
+        "queue": 4.0531158447265625e-06,
+        "redirect": 0.0,
+        "starttransfer": 0.32305,
+        "total": 0.32317,
+        "url": "https://me.baojia.com/bike/about/us?appFrom=1"
+    }
+}
