@@ -553,25 +553,18 @@ class Create_Batch(object):
             items_domainip_color = [
                 {'itemid': i.get('itemid'), 'yaxisside': 1 if "health_code_http" in i.get('name') else 0} for i in
                 zbix.item_get(name=it.url[0])]
-            pprint(items_domainip_color)
-
-            # 域名 url
-            res = zbix.graph_create(name=f"{it.name}_{it.url[0]}_test2", gitems=items_domainip_color)
-            print(res)
-            all_items_color = [{"color": _} for _ in zbix.choose_color[:len(items_domainip_color)]]
 
             # 后端真实主机监控
             items_real = (zbix.item_get(key_=_) for _ in it.real_host)
-            # [items_domainip_color.append(
-            #     {'itemid': item.get('itemid'), 'yaxisside': 1 if "health_code" in item.get('name') else 0}) for i
-            [{'itemid': item.get('itemid'), 'yaxisside': 1 if "health_code" in item.get('name') else 0} for i
-             in
-             items_real for item in i]
+            [items_domainip_color.append(
+                {'itemid': item.get('itemid'), 'yaxisside': 1 if "health_code" in item.get('name') else 0}) for i
+                in
+                items_real for item in i]
             all_items_color = [{"color": _} for _ in zbix.choose_color[:len(items_domainip_color)]]
             for i in range(len(items_domainip_color)):
                 items_domainip_color[i].update(all_items_color[i])
 
-            res = zbix.graph_create(name=f"{it.name}_{it.url[0]}_test2", gitems=items_domainip_color)
+            res = zbix.graph_create(name=f"{it.name}_{it.url[0]}_test3", gitems=items_domainip_color)
             print(res)
 
         except  Exception as e:
