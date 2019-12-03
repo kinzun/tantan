@@ -270,7 +270,7 @@ class Moniter(object):
             "type": 0,
             "interfaceid": "178",
             "value_type": value_type,
-            "delay": "10s",
+            "delay": "30s",
             "inventory_link": 0,
         }
         if value_type == 0:
@@ -564,7 +564,7 @@ class Create_Batch(object):
                 for i in range(len(items_domainip_color)):
                     items_domainip_color[i].update(all_items_color[i])
 
-                res = zbix.graph_create(name=f"{it.name}_{it.url[0]}", gitems=items_domainip_color)
+                zbix.graph_create(name=f"{it.name}_{it.url[0]}", gitems=items_domainip_color)
 
                 # 后端真实主机监控
                 items_real = (zbix.item_get(name=_) for _ in it.real_host)
@@ -575,8 +575,8 @@ class Create_Batch(object):
                 for i in range(len(realend_items)):
                     realend_items[i].update(real_end_color[i])
 
-                res = zbix.graph_create(name=f"realend_{it.name}_{it.url[0]}", gitems=realend_items)
-                print(res)
+                zbix.graph_create(name=f"realend_{it.name}_{it.url[0]}", gitems=realend_items)
+
 
             except  Exception as e:
                 print(e)
@@ -588,7 +588,7 @@ if __name__ == '__main__':
 
     mutil_cr = Create_Batch()
     mutil_cr.crate_batch_mhost()
-    mutil_cr.crete_mhost_graph_()
+    # mutil_cr.crete_mhost_graph_()
 
     # mutil_cr.items_del()
 
