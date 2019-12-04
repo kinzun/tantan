@@ -1,4 +1,5 @@
 import logging
+import re
 from collections import namedtuple
 
 import requests
@@ -270,7 +271,7 @@ class Moniter(object):
             "type": 0,
             "interfaceid": "178",
             "value_type": value_type,
-            "delay": "30s",
+            "delay": "60s",
             "inventory_link": 0,
         }
         if value_type == 0:
@@ -356,7 +357,7 @@ class Moniter(object):
 
         """颜色线条"""
         color_sequence = ['#dbdb8d', '#17becf', '#ff9896', '#199C0D', '#1f77b4', '#aec7e8', '#ff7f0e', '#c5b0d5',
-                          '#ffbb78', '#2ca02c', '#98df8a', "#9edae5", '#d62728', '#9467bd', '#bcbd22', '#8c564b',
+                          '#ffbb78', '#98df8a', "#9edae5", '#d62728', '#9467bd', '#bcbd22', '#8c564b',
                           '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7']
 
         return [_.replace("#", "") for _ in color_sequence]
@@ -448,11 +449,6 @@ class Create_Batch(object):
         hostid = zbix.get_host_id(name="1-11-57")
         zbix.hostid = hostid
         graph = zbix.graph_get()
-        # print(graph)
-        # for i in graph:
-        #     if i.get('https://me.baojia.com/',""):
-        # print(i.get('name'))
-        # if "web前端" in i.get('name'):
         urls_info = ret_urls()
 
         # pprint(urls_info)
@@ -460,14 +456,15 @@ class Create_Batch(object):
         def code_toal_string(real_backend=None):
             """生成监控项所用的，key  , code total"""
             return [("real_health_code_{}", "real_health_code[{},{}]"),
-                    ("real_health_total_{}", "real_health_total[{},{}]")] if real_backend \
-                else [("health_total_{}", "health_total[{}]"), ("health_code_{}", "health_code[{}]"),
-                      ("health_connect_{}", "health_connect[{}]"), ("health_start_{}", "health_start[{}]")]
+                    ("real_health_total_{}", "real_health_total[{},{}]")] if real_backend else [
+                ("health_code_{}", "health_code[{}]"),
+                ("health_total_{}", "health_total[{}]")]
 
-            # [("health_code_{}", "health_code[{}]"), ("health_total_{}", "health_total[{}]")]
+            # else [("health_total_{}", "health_total[{}]"), ("health_code_{}", "health_code[{}]"),
+            #       ("health_connect_{}", "health_connect[{}]"), ("health_start_{}", "health_start[{}]")]
 
         def item_create_(itemname, key_name):
-            if "code" in name[0]:
+            if "code" in itemname:
                 zbix.item_create(item_name=itemname,
                                  key_name=key_name, value_type=3)
             else:
@@ -485,14 +482,15 @@ class Create_Batch(object):
                 except Exception as e:
                     print(e)
 
-            for name in code_toal_string(real_backend=True):
+            if len(it.real_host) >= 1:
                 for i in it.real_host:
-                    try:
-                        itemname = name[0].format(i)
-                        key_name = name[1].format(it.url[0], i)
-                        item_create_(itemname, key_name)
-                    except Exception as e:
-                        print(e)
+                    for name in code_toal_string(real_backend=True):
+                        try:
+                            itemname = name[0].format(i)
+                            key_name = name[1].format(it.url[0], i)
+                            item_create_(itemname, key_name)
+                        except Exception as e:
+                            print(e)
 
     @staticmethod
     def domain_search():
@@ -519,11 +517,11 @@ class Create_Batch(object):
                 graph_items = [{'itemid': i.get('itemid')} for i in items_domain]
                 print(graph_items)
 
-                # colors = [{'color': '199C0D'}, {'color': 'F63100'}, {'color': '2774A4'}, {'color': 'F7941D'}]
-                # for i in range(len(colors)):
-                #     graph_items[i].update(colors[i])
-                # res = zbix.graph_create(name=it.name, gitems=graph_items)
-                #
+                colors = [{'color': '199C0D'}, {'color': 'F63100'}, {'color': '2774A4'}, {'color': 'F7941D'}]
+                for i in range(len(colors)):
+                    graph_items[i].update(colors[i])
+                res = zbix.graph_create(name=it.name, gitems=graph_items)
+
                 # print(res)
             except  Exception as e:
                 print(e)
@@ -582,13 +580,59 @@ class Create_Batch(object):
                 print(e)
                 pass
 
+    @staticmethod
+    def create_ms_graph():
+
+        urls_info = ret_urls()
+        zbix = Moniter()
+        zbix.hostid = "10452"
+        s = zbix.graph_get()
+
+        url_info = namedtuple('urls_info', ['name', 'url', 'return_msg', 'code', 'real_host'])
+
+        it = url_info(name='bike-bike', url=['https://me.baojia.com/'], return_msg=['没有相关操作权限'], code=[200],
+                      real_host=['10.1.11.140:8080', '10.1.11.220:8080', '10.1.11.221:8080'])
+
+        for it in urls_info:
+
+            # 获取所有 域名下 后端的真实主机
+            try:
+                items_domainip_color = [
+                    {'itemid': i.get('itemid'), 'yaxisside': 1 if "health_code_http" in i.get('name') else 0} for i in
+                    zbix.item_get(name=it.url[0]) if re.findall(r"{}$".format(it.url[0]), i.get("name"))]
+                # 后端真实主机监控
+                items_real = (zbix.item_get(name=_) for _ in it.real_host)
+
+                # for i in it.real_host:
+                #     all_real_host = zbix.item_get(name=i)
+                #     for item_real in all_real_host:
+                #         print(item_real.get('name'))
+
+                # for  item_real in item_real:
+
+                [items_domainip_color.append(
+                    {'itemid': item.get('itemid'), 'yaxisside': 1 if "health_code" in item.get('name') else 0}) for i
+                    in
+                    items_real for item in i if item.get('name').startswith('real')]
+                all_items_color = [{"color": _} for _ in zbix.choose_color[:len(items_domainip_color)]]
+                for i in range(len(items_domainip_color)):
+                    items_domainip_color[i].update(all_items_color[i])
+
+                print(items_domainip_color)
+                res = zbix.graph_create(name=f"{it.name}_{it.url[0]}", gitems=items_domainip_color)
+                # print(res)
+
+            except  Exception as e:
+                print(e)
+                pass
+
 
 if __name__ == '__main__':
     from pprint import pprint
 
     mutil_cr = Create_Batch()
     mutil_cr.crate_batch_mhost()
-    # mutil_cr.crete_mhost_graph_()
+    mutil_cr.create_ms_graph()
 
     # mutil_cr.items_del()
 

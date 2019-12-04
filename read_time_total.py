@@ -12,12 +12,14 @@ url_time_info = os.path.join(BASE_DIR, 'url_time_info.json')
 def main():
     with open(url_time_info, mode='r')as f:
         time_info = json.load(f)
-
     if len(sys.argv) >= 3:
-        return time_info.get(sys.argv[1], '')['backend_real'].get(sys.argv[2], '').get('total', '')
-    else:
-        return time_info.get(sys.argv[1]).get('total', '')
+        try:
 
+            return time_info.get(sys.argv[1])['backend_real'].get(sys.argv[2]).get('total', -1)
+        except  Exception as e:
+            return -1
+    else:
+        return time_info.get(sys.argv[1]).get('total', -1)
 
 
 print(main())

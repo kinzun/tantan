@@ -18,9 +18,12 @@ def main():
     with open(url_time_info, mode='r')as f:
         time_info = json.load(f)
         if len(sys.argv) >= 3:
-            return time_info.get(sys.argv[1],'')['backend_real'].get(sys.argv[2],'').get('connect', '')
+            try:
+                return time_info.get(sys.argv[1], ).get('backend_real', '').get(sys.argv[2], '').get('connect', -1)
+            except Exception as e:
+                return -1
         else:
-            return time_info.get(sys.argv[1]).get('connect', '')
+            return time_info.get(sys.argv[1]).get('connect', -1)
 
 
 print(main())
