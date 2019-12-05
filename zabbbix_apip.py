@@ -1,9 +1,11 @@
 import logging
 import re
+import json
 from collections import namedtuple
+from urllib.parse import urlparse
+from urllib.parse import unquote_plus
 
 import requests
-import json
 from bin.read_xlsx import ret_urls
 
 
@@ -297,7 +299,8 @@ class Moniter(object):
             "sortfield": "name"  # 名称排序
         }
 
-        params.get('search').update(**kwargs) if kwargs.get('name') else params.get('search').update(key_=key_)
+        if kwargs.get('name', ''):
+            params.get('search').update(**kwargs) if kwargs.get('name') else params.get('search').update(key_=key_)
 
         return self.zapi.item.get(**params)
 
@@ -308,6 +311,27 @@ class Moniter(object):
             items = [items]
 
         return self.zapi.item.delete(items)
+
+    def item_update(self, itemid=None, **kwargs):
+        """更新监控项 设置 """
+        """{
+            "jsonrpc": "2.0",
+            "method": "item.update",
+            "params": {
+                "itemid": "10092",
+                "status": 0
+            },
+            "auth": "700ca65537074ec963db7efabda78259",
+            "id": 1
+            }
+         """
+        params = {
+            "itemid": itemid
+        }
+        if kwargs:
+            params.update(**kwargs)
+
+        return self.zapi.item.update(**params)
 
     def graph_get(self):
         """获取主机上的图形"""
@@ -423,7 +447,7 @@ class Create_Batch(object):
 
     @staticmethod
     def _create_test():
-        """中断 搜索"""
+        """未完成， 搜索"""
         zbix = Moniter()
         hostid = zbix.get_host_name("Meboth-IDC-Switch-1")
         all_graphics_received = zbix.item_get(hostid, key_="Bits received")
@@ -494,14 +518,11 @@ class Create_Batch(object):
 
     @staticmethod
     def domain_search():
-        pass
         # 域名提取
-        # from urllib.parse import urlparse
-        # urls_info = ret_urls()
-        # for i in urls_info:
-        #
-        #     res = urlparse(i.url[0])
-        #     print(res)
+        urls_info = ret_urls()
+        for i in urls_info:
+            res = urlparse(i.url[0])
+            print(res)
 
     @staticmethod
     def crate_mhost_grpaph():
@@ -539,6 +560,7 @@ class Create_Batch(object):
 
     @staticmethod
     def crete_mhost_graph_():
+        """创建图形， 域名和 后端真实主机分别创建图形"""
         urls_info = ret_urls()
         zbix = Moniter()
         zbix.hostid = "10452"
@@ -549,26 +571,54 @@ class Create_Batch(object):
         it = url_info(name='bike-bike', url=['https://me.baojia.com/'], return_msg=['没有相关操作权限'], code=[200],
                       real_host=['10.1.11.140:8080', '10.1.11.220:8080', '10.1.11.221:8080'])
 
+        def url_conversion(url, item_name):
+
+            regular = re.compile("(?:https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]")
+            if regular.search(item_name):
+                re_item_url = regular.findall(item_name)
+                if unquote_plus(re_item_url[0]) == unquote_plus(url):
+                    return True
+            else:
+                return item_name
+
         for it in urls_info:
             # 获取所有 域名下 后端的真实主机
             try:
                 # 域名 url
+                # items_domainip_color = [
+                #     {'itemid': i.get('itemid'), 'yaxisside': 1 if "health_code_http" in i.get('name') else 0} for i in
+                #     zbix.item_get(name=it.url[0])]
+                print(it.url[0])
                 items_domainip_color = [
-                    {'itemid': i.get('itemid'), 'yaxisside': 1 if "health_code_http" in i.get('name') else 0} for i in
-                    zbix.item_get(name=it.url[0])]
+                    {'itemid': i.get('itemid'), 'yaxisside': 0 if "health_code_http" in i.get('name') else 1,
+                     "drawtype": 5 if "health_code_http" in i.get('name') else 1} for i in
+                    zbix.item_get(name=it.url[0]) if url_conversion(it.url[0], i.get('name'))]
 
                 all_items_color = [{"color": _} for _ in zbix.choose_color[:len(items_domainip_color)]]
 
                 for i in range(len(items_domainip_color)):
                     items_domainip_color[i].update(all_items_color[i])
 
+                pprint(items_domainip_color)
+
                 zbix.graph_create(name=f"{it.name}_{it.url[0]}", gitems=items_domainip_color)
 
                 # 后端真实主机监控
                 items_real = (zbix.item_get(name=_) for _ in it.real_host)
+
+                # realend_items = [
+                #     {'itemid': item.get('itemid'), 'yaxisside': 1 if "health_code" in item.get('name') else 0}
+                #     for i in items_real for item in i]
+
+                yaxisside_code = lambda x: 0 if "health_code" in x else 1
+                drawtype_code = lambda x: 5 if "health_code" in x else 1
+
                 realend_items = [
-                    {'itemid': item.get('itemid'), 'yaxisside': 1 if "health_code" in item.get('name') else 0}
-                    for i in items_real for item in i]
+                    {'itemid': item.get('itemid'), 'yaxisside': yaxisside_code(i.get('name')),
+                     'drawtype': drawtype_code(i.get('name'))} for i
+                    in
+                    items_real for item in i if item.get('name').startswith('real')]
+
                 real_end_color = [{"color": _} for _ in zbix.choose_color[:len(realend_items)]]
                 for i in range(len(realend_items)):
                     realend_items[i].update(real_end_color[i])
@@ -582,6 +632,7 @@ class Create_Batch(object):
 
     @staticmethod
     def create_ms_graph():
+        """域名和主机的都在一个图形中"""
 
         urls_info = ret_urls()
         zbix = Moniter()
@@ -594,21 +645,13 @@ class Create_Batch(object):
                       real_host=['10.1.11.140:8080', '10.1.11.220:8080', '10.1.11.221:8080'])
 
         for it in urls_info:
-
             # 获取所有 域名下 后端的真实主机
             try:
                 items_domainip_color = [
                     {'itemid': i.get('itemid'), 'yaxisside': 1 if "health_code_http" in i.get('name') else 0} for i in
-                    zbix.item_get(name=it.url[0]) if re.findall(r"{}$".format(it.url[0]), i.get("name"))]
+                    zbix.item_get(name=it.url[0]) if re.findall("{}$".format(it.url[0]), i.get("name"))]
                 # 后端真实主机监控
                 items_real = (zbix.item_get(name=_) for _ in it.real_host)
-
-                # for i in it.real_host:
-                #     all_real_host = zbix.item_get(name=i)
-                #     for item_real in all_real_host:
-                #         print(item_real.get('name'))
-
-                # for  item_real in item_real:
 
                 [items_domainip_color.append(
                     {'itemid': item.get('itemid'), 'yaxisside': 1 if "health_code" in item.get('name') else 0}) for i
@@ -626,19 +669,58 @@ class Create_Batch(object):
                 print(e)
                 pass
 
+    @staticmethod
+    def item_upde_():
+        """
+        更新主机上所有监控项的类型,为主动模式 type 7
+        https://www.zabbix.com/documentation/4.0/manual/api/reference/item/object#item
+
+
+        :return:
+        """
+
+        zbix = Moniter()
+        zbix.hostid = "10452"
+        all_itemid = (i.get('itemid') for i in zbix.item_get())
+        for i in all_itemid:
+            try:
+                # zbix.item_update(i, type=7)
+                zbix.item_update(i, delay="60s")
+            except Exception as e:
+                print(e)
+
+    def graphitem_get_(self):
+        zbix = Moniter()
+        zbix.hostid = "10452"
+
+        graph = zbix.graph_get()
+        s = (i for i in graph if 'bike-bike' in i.get('name'))
+        for i in s:
+            print(i)
+
+        mutil_cr = Create_Batch()
+        mutil_cr.crete_mhost_graph_()
+        pprint(zbix.graphitem_get("3196"))
+
 
 if __name__ == '__main__':
     from pprint import pprint
 
-    mutil_cr = Create_Batch()
-    mutil_cr.crate_batch_mhost()
-    mutil_cr.create_ms_graph()
+    zbix = Moniter()
+    zbix.hostid = "10452"
+    # for i
+
+    # mutil_cr.item_upde_()
+
+    # mutil_cr.crete_mhost_graph_()
+    # mutil_cr.crate_batch_mhost()
+    # mutil_cr.create_ms_graph()
 
     # mutil_cr.items_del()
 
-    # zbix.graph_get()
+    s = zbix.graph_get()
 
-    # zbix.item_get()
+    # s = zbix.item_get(name='cmdb')
 
     # graph_items = [{'itemid': i.get('itemid')} for i in all_graphics if sind.findall(i.get('name'))]
 

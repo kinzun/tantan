@@ -1,18 +1,16 @@
 import json
 import sys
 import os
-# from io import BytesIO
 from collections import namedtuple
 import time
-# import pycurl
 import asyncio
 from tornado.httpclient import AsyncHTTPClient
-from tornado import ioloop
-from tornado.ioloop import IOLoop
+# from tornado import ioloop
+# from tornado.ioloop import IOLoop
+
 from tornado.httpclient import HTTPClientError
-from bin.new_curl_tornado import CurlError
+# from bin.new_curl_tornado import CurlError
 from bin.read_xlsx import ret_urls
-from pprint import pprint
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -31,14 +29,14 @@ DICT_INFO = {}
 # 死循环
 # IOLoop.instance().start()
 
-from tornado.curl_httpclient import CurlAsyncHTTPClient
+# from tornado.curl_httpclient import CurlAsyncHTTPClient
 
-from requests.models import Response
+# from requests.models import Response
 import chardet
 
 
 class Response(object):
-    "处理 流响应内容"
+    "处理流响应内容"
 
     def __init__(self, content):
         """"""
@@ -211,32 +209,22 @@ class tornado_curl(object):
 
         s = url_info(name='bike-bike', url=['https://me.baojia.com/'], return_msg=['没有相关操作权限'], code=[200],
                      real_host=['10.1.11.140:8080', '10.1.11.220:8080', '10.1.11.221:8080'])
-        # print(all_urls)
 
         tasks = []
         for i in all_urls:
             tasks.append(tornado_curl.fetch_async(i))
-            # break
-        # tasks.append(tornado_curl.fetch_async(s))
 
-        # start = time.time()
         event_loop = asyncio.get_event_loop()
         event_loop.run_until_complete(asyncio.gather(*tasks))
         event_loop.close()
-        # pprint(DICT_INFO)
-        # print(time.time() - start)
 
         with open(os.path.join(BASE_DIR, 'url_time_info.json'), mode='w', ) as f:
             json.dump(DICT_INFO, f, sort_keys=True, indent=4)
 
 
-
-# tornado_curl.run()
+def file_time_diff():
+    return time.time() - os.path.getctime(os.path.join(BASE_DIR), 'url_time_info') >= 30
 
 
 if __name__ == '__main__':
     tornado_curl.run()
-
-# all_urls = ret_urls()
-# pprint(all_urls)
-# print(len(all_urls))
