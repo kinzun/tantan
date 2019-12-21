@@ -19,6 +19,7 @@ DICT_INFO = {}
 
 
 def url_conversion(url, item_name):
+    """url 判断"""
     regular = re.compile("(?:https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]")
     if regular.search(item_name):
         re_item_url = regular.findall(item_name)
@@ -51,7 +52,7 @@ class tornado_curl(object):
 
     @staticmethod
     async def real_fetch_async(http_client, res_urls):
-
+        """后端主机的检测"""
         real_dict = {}
 
         for url_get in res_urls:
@@ -74,9 +75,10 @@ class tornado_curl(object):
 
     @staticmethod
     async def try_three(http_client, url_tuple):
+        """减少误报 ，错误重试2次"""
         i = 0
         response = ""
-        while i < 2:
+        while i < 1:
             try:
                 response = await  http_client.fetch(url_tuple.url[0], connect_timeout=10,
                                                     request_timeout=10)
