@@ -3,15 +3,10 @@ from urllib.parse import unquote_plus, quote_plus
 import json
 import sys
 import os
-from collections import namedtuple
 import time
 import asyncio
 from tornado.httpclient import AsyncHTTPClient
-# from tornado import ioloop
-# from tornado.ioloop import IOLoop
-
 from tornado.httpclient import HTTPClientError
-# from bin.new_curl_tornado import CurlError
 from bin.read_xlsx import ret_urls
 from bin.response import Response
 
@@ -21,29 +16,6 @@ PROJECT_DIR = os.path.dirname(BASE_DIR)
 sys.path.append(PROJECT_DIR)
 
 DICT_INFO = {}
-
-
-# 默认client是基于ioloop实现的，配置使用Pycurl
-# AsyncHTTPClient.configure("tornado.curl_httpclient.CurlAsyncHTTPClient", max_clients=20)
-# http_client = AsyncHTTPClient()
-# for i in range(count):
-#     http_client.fetch("http://127.0.0.1:8082", handle_request)
-
-
-# 死循环
-# IOLoop.instance().start()
-
-# from tornado.curl_httpclient import CurlAsyncHTTPClient
-
-
-class Post_curl(object):
-
-    def post(self):
-        pass
-
-
-def func():
-    pass
 
 
 def url_conversion(url, item_name):
@@ -75,10 +47,7 @@ class tornado_curl(object):
                 return response_
 
         except Exception as e:
-            print(e)
             pass
-            # print(e)
-            # return response_
 
     @staticmethod
     async def real_fetch_async(http_client, res_urls):
@@ -131,8 +100,6 @@ class tornado_curl(object):
         response = ""
 
         # "状态码 连接时间 接收到第一个字节的时间 总时间"
-        # monitor = namedtuple("Monitor",
-        #                      ["URL", "body", "http_code", "connect_time", "starttransfer_time", "total_time"])
 
         try:
             if url_tuple.url[0] == "http://wangguan.baojia.com/appQuery/btMac":
@@ -157,29 +124,15 @@ class tornado_curl(object):
 
 
 
-        # except Exception as e:
         except HTTPClientError as e:
-            # print("Error: %s" % e.response)
-            # print("Error: %s" % e.response.time_info)
 
             response = {"url": url_tuple.url[0], "code": e.code, "message": e.message, "total": ''}
             if 200 <= e.code < 500:
                 response.update(e.response.time_info)
-            # print(response)
-            # print(e.response.time_info)
-            # print(response)
 
         else:
             pass
-            # print(response.headers)
-            # print(response.request_time)
-            # print(response.start_time)
-            # print(response.elapsed.total_seconds())
-            # print(response.effective_url)
-            # print(response.code)
-            # print(response.time_info)
-            # print(response.reason)
-            # print(response.body)
+
         finally:
             if hasattr(response, "time_info"):
                 response.time_info['url'] = url_tuple.url[0]
@@ -202,43 +155,9 @@ class tornado_curl(object):
             total_time： 从开始直到结束的所有时间。
         """
 
-        # tasks = [fetch_async('http://www.google.com/'), fetch_async('http://www.cnblogs.com/ssyfj/'),
-
-        #          fetch_async('http://baojia.com')]
-
-        # tasks = [fetch_async("http://127.0.0.1:8082/curl/")] * 50
-        # tasks = [fetch_async("http://127.0.0.1:8082/curl/") for i in range(50)]
-
-        # io_loop = ioloop.IOLoop.current()
-        # io_loop.run_sync()
-
     @staticmethod
     def run():
         all_urls = ret_urls()
-
-        url_info = namedtuple('urls_info', ['name', 'url', 'return_msg', 'code', 'real_host'])
-
-        # s = url_info(name='baojia', url=['http://wangguan.baojia.com/appQuery/btMac'],
-        #              return_msg=['No message available'], code=[404],
-        #              real_host=['47.94.14.14', '47.94.147.183'])
-        #
-        """ 测试用url """
-        # s = url_info(name='bike-bike', url=['https://me.baojia.com/'], return_msg=['没有相关操作权限'], code=[200],
-        #              real_host=[])
-        # se = url_info(name='换电柜网关系统io、cloud', url=['211.151.2.246:38026'], return_msg=['1341'], code=[200],
-        #               real_host=[])
-        # se1 = url_info(name='pmall线上', url=['http://me.baojia.com/pmall/allProduct'], return_msg=['操作成功'], code=[200],
-        #                real_host=[])
-        # se2 = url_info(name='web前端 计价规则', url=['http://static.meboth.cn/xiaomi/metripapp/20180913/rule.html'],
-        #                return_msg=['计价规则'], code=[200],
-        #                real_host=[])
-        #
-        # tasks = []
-        # tasks.append(tornado_curl.fetch_async(s))
-        # tasks.append(tornado_curl.fetch_async(se))
-        # tasks.append(tornado_curl.fetch_async(se1))
-        # tasks.append(tornado_curl.fetch_async(se2))
-
         tasks = []
         for i in all_urls:
             tasks.append(tornado_curl.fetch_async(i))
@@ -255,14 +174,5 @@ def file_time_diff():
     return time.time() - os.path.getctime(os.path.join(BASE_DIR), 'url_time_info') >= 30
 
 
-
 if __name__ == '__main__':
     tornado_curl.run()
-
-    # import cProfile
-    #
-    # cProfile.run("tornado_curl.run()", "prof.txt")
-    # import pstats
-    #
-    # p = pstats.Stats("prof.txt")
-    # p.sort_stats("time").print_stats()
