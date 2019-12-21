@@ -9,7 +9,6 @@ from pprint import pprint
 from ipaddress import ip_address
 import ipaddress
 
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 PROJECT_DIR = os.path.dirname(BASE_DIR)
@@ -37,12 +36,12 @@ def file_encoding(filename):
 
 def read_xlsx():
     # data = xlrd.open_workbook('bin/urls_alone.xlsx')
-    data = xlrd.open_workbook(os.path.join(BASE_DIR,"urls_alone.xlsx"))
+    data = xlrd.open_workbook(os.path.join(BASE_DIR, "urls_alone.xlsx"))
     table = data.sheet_by_name(u'Sheet1')  # 通过名称获取
     nrows = table.nrows
     # 循环行列表数据
 
-    url_info = namedtuple('urls_info', ['name', 'url', 'return_msg', 'code', 'real_host'])
+    url_info = namedtuple('urls_info', ['name', 'url', 'return_msg', 'code', 'real_host', 'res_type'])
     all_dict_url = []
     for i in range(1, nrows):
 
@@ -62,10 +61,10 @@ def is_ip_Valid(ipaddr):
 
 
 def ret_urls():
+    """获取xlsx url """
     full_tuple = read_xlsx()
-
     new_url = []
-    url_info = namedtuple('urls_info', ['name', 'url', 'return_msg', 'code', 'real_host'])
+    url_info = namedtuple('urls_info', ['name', 'url', 'return_msg', 'code', 'real_host', 'res_type'])
     p = re.compile(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+")
     for i in full_tuple:
         try:
@@ -83,21 +82,15 @@ def ret_urls():
                 else:
                     code = [int(float(code[0]))]
 
-            new_url.append(url_info(i.name, url if isinstance(url, list) else [url], i.return_msg.split('\n'), code,
-                                    i.real_host.split()))
+            # 处理后重新生成新的 nametuptupel
+            new_url.append(url_info(i.name, url if isinstance(url, list) else [url], i.return_msg, code,
+            # new_url.append(url_info(i.name, url if isinstance(url, list) else [url], i.return_msg.split('\n'), code,
+                                    i.real_host.split(), i.res_type))
 
         except Exception as e:
             print(e)
 
     return new_url
-
-
-if __name__ == '__main__':
-    all_urls_tuple = ret_urls()
-    pprint(all_urls_tuple)
-
-
-#     pass
 
 
 def url_find(url_list):
@@ -117,6 +110,11 @@ def url_find(url_list):
         else:
             all_urls.append(url_dict)
 
-    pprint(all_urls)
 
-# url_find(url_list)
+def main():
+    all_urls_tuple = ret_urls()
+    pprint(all_urls_tuple)
+
+
+if __name__ == "__main__":
+    main()

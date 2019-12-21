@@ -15,7 +15,7 @@ def main():
         if len(sys.argv) >= 3:
             try:
 
-                return time_info.get(sys.argv[1])['backend_real'].get(sys.argv[2]).get('total')
+                return time_info.get(sys.argv[1])['backend_real'].get(sys.argv[2]).get('total', "")
             except  Exception as e:
                 return ""
         else:

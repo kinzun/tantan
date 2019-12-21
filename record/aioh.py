@@ -3,6 +3,8 @@ import aiohttp
 from aiohttp.resolver import AsyncResolver
 import concurrent
 
+import requests
+
 url = "http://www.baidu.com"
 
 

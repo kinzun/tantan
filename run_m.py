@@ -1,3 +1,5 @@
+import re
+from urllib.parse import unquote_plus, quote_plus
 import json
 import sys
 import os
@@ -11,6 +13,7 @@ from tornado.httpclient import AsyncHTTPClient
 from tornado.httpclient import HTTPClientError
 # from bin.new_curl_tornado import CurlError
 from bin.read_xlsx import ret_urls
+from bin.response import Response
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -18,6 +21,7 @@ PROJECT_DIR = os.path.dirname(BASE_DIR)
 sys.path.append(PROJECT_DIR)
 
 DICT_INFO = {}
+
 
 # 默认client是基于ioloop实现的，配置使用Pycurl
 # AsyncHTTPClient.configure("tornado.curl_httpclient.CurlAsyncHTTPClient", max_clients=20)
@@ -31,53 +35,6 @@ DICT_INFO = {}
 
 # from tornado.curl_httpclient import CurlAsyncHTTPClient
 
-# from requests.models import Response
-import chardet
-
-
-class Response(object):
-    "处理流响应内容"
-
-    def __init__(self, content):
-        """"""
-        self._content = content
-        self.encoding = None
-
-    @property
-    def apparent_encoding(self):
-        """The apparent encoding, provided by the chardet library."""
-        return chardet.detect(self.content)['encoding']
-
-    @property
-    def content(self):
-        if self._content is False:
-            self._content = b''.join(self._content or b'')
-
-        return self._content
-
-    @property
-    def text(self):
-        content = None
-        encoding = self.encoding
-
-        if not self.content:
-            return str('')
-
-        if self.encoding is None:
-            encoding = self.apparent_encoding
-
-        try:
-            content = str(self.content, encoding, errors='replace')
-        except (LookupError, TypeError):
-            content = str(self.content, errors='replace')
-
-        return content
-
-    @staticmethod
-    def binary_to_html(binary):
-        text = binary.decode('utf-8')
-        return text
-
 
 class Post_curl(object):
 
@@ -85,7 +42,43 @@ class Post_curl(object):
         pass
 
 
+def func():
+    pass
+
+
+def url_conversion(url, item_name):
+    regular = re.compile("(?:https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]")
+    if regular.search(item_name):
+        re_item_url = regular.findall(item_name)
+        if unquote_plus(re_item_url[0]) == unquote_plus(url):
+            return True
+    else:
+        return item_name
+
+
 class tornado_curl(object):
+
+    @staticmethod
+    def response_content(url_info, response_):
+        """响应类型 和响应内容的判断..."""
+        try:
+            content_type = response_.headers.get('Content-Type')
+            if "json" in content_type:
+                Response(response_.body).json()
+                return response_
+            else:
+                content = Response(response_.body).text
+                if url_info.return_msg in content:
+                    return response_
+                else:
+                    return response_
+                return response_
+
+        except Exception as e:
+            print(e)
+            pass
+            # print(e)
+            # return response_
 
     @staticmethod
     async def real_fetch_async(http_client, res_urls):
@@ -94,7 +87,7 @@ class tornado_curl(object):
 
         for url_get in res_urls:
             try:
-                real_response = await http_client.fetch(url_get, connect_timeout=20, request_timeout=20)
+                real_response = await http_client.fetch(url_get, connect_timeout=5, request_timeout=5)
             except Exception as e:
                 real_response = {"url": url_get, "code": e.code, "message": e.message, "total": ''}
 
@@ -104,17 +97,38 @@ class tornado_curl(object):
                 if hasattr(real_response, "time_info"):
                     real_response.time_info['url'] = url_get
                     real_response.time_info['code'] = real_response.code
-                    real_dict[url_get] = real_response.time_info
+                    real_dict[quote_plus(url_get)] = real_response.time_info
                 else:
-                    real_dict[url_get] = real_response
+                    real_dict[quote_plus(url_get)] = real_response
 
         return real_dict
+
+    @staticmethod
+    async def try_three(http_client, url_tuple):
+        i = 0
+        response = ""
+        while i < 2:
+            try:
+                response = await  http_client.fetch(url_tuple.url[0], connect_timeout=10,
+                                                    request_timeout=10)
+
+                return tornado_curl.response_content(url_tuple, response)
+            except HTTPClientError as e:
+                i += 1
+                response = {"url": url_tuple.url[0], "code": e.code, "message": e.message,
+                            "total": e.response.time_info.get("total")
+                            }
+
+                if 200 <= e.code < 500:
+                    response.update(e.response.time_info)
+        return response
 
     @staticmethod
     async def fetch_async(url_tuple):
         # AsyncHTTPClient.configure("tornado.curl_httpclient.CurlAsyncHTTPClient", max_clients=30)
         AsyncHTTPClient.configure("bin.new_curl_tornado.CurlAsyncHTTPClient", max_clients=30)
         http_client = AsyncHTTPClient()
+        response = ""
 
         # "状态码 连接时间 接收到第一个字节的时间 总时间"
         # monitor = namedtuple("Monitor",
@@ -131,7 +145,9 @@ class tornado_curl(object):
                                                    connect_timeout=20, request_timeout=20)
 
             else:
-                response = await http_client.fetch(url_tuple.url[0], connect_timeout=20, request_timeout=20)
+
+                # 如果报错，重试3次.
+                response = await tornado_curl.try_three(http_client, url_tuple)
 
                 if url_tuple.real_host:
                     readl = await  tornado_curl.real_fetch_async(http_client=http_client,
@@ -145,8 +161,8 @@ class tornado_curl(object):
         except HTTPClientError as e:
             # print("Error: %s" % e.response)
             # print("Error: %s" % e.response.time_info)
-            response = {"url": url_tuple.url[0], "code": e.code, "message": e.message, "total": ''}
 
+            response = {"url": url_tuple.url[0], "code": e.code, "message": e.message, "total": ''}
             if 200 <= e.code < 500:
                 response.update(e.response.time_info)
             # print(response)
@@ -170,12 +186,11 @@ class tornado_curl(object):
                 response.time_info['code'] = response.code
                 # response.time_info['body'] = Response(response.body).text
                 # DICT_INFO.append(response.time_info)
-                DICT_INFO[url_tuple.url[0]] = response.time_info
+                DICT_INFO[quote_plus(url_tuple.url[0])] = response.time_info
                 return response.time_info
             else:
-
                 # DICT_INFO.append(response)
-                DICT_INFO[url_tuple.url[0]] = response
+                DICT_INFO[quote_plus(url_tuple.url[0])] = response
                 return response
 
         """
@@ -206,9 +221,23 @@ class tornado_curl(object):
         # s = url_info(name='baojia', url=['http://wangguan.baojia.com/appQuery/btMac'],
         #              return_msg=['No message available'], code=[404],
         #              real_host=['47.94.14.14', '47.94.147.183'])
-
-        s = url_info(name='bike-bike', url=['https://me.baojia.com/'], return_msg=['没有相关操作权限'], code=[200],
-                     real_host=['10.1.11.140:8080', '10.1.11.220:8080', '10.1.11.221:8080'])
+        #
+        """ 测试用url """
+        # s = url_info(name='bike-bike', url=['https://me.baojia.com/'], return_msg=['没有相关操作权限'], code=[200],
+        #              real_host=[])
+        # se = url_info(name='换电柜网关系统io、cloud', url=['211.151.2.246:38026'], return_msg=['1341'], code=[200],
+        #               real_host=[])
+        # se1 = url_info(name='pmall线上', url=['http://me.baojia.com/pmall/allProduct'], return_msg=['操作成功'], code=[200],
+        #                real_host=[])
+        # se2 = url_info(name='web前端 计价规则', url=['http://static.meboth.cn/xiaomi/metripapp/20180913/rule.html'],
+        #                return_msg=['计价规则'], code=[200],
+        #                real_host=[])
+        #
+        # tasks = []
+        # tasks.append(tornado_curl.fetch_async(s))
+        # tasks.append(tornado_curl.fetch_async(se))
+        # tasks.append(tornado_curl.fetch_async(se1))
+        # tasks.append(tornado_curl.fetch_async(se2))
 
         tasks = []
         for i in all_urls:
@@ -226,5 +255,14 @@ def file_time_diff():
     return time.time() - os.path.getctime(os.path.join(BASE_DIR), 'url_time_info') >= 30
 
 
+
 if __name__ == '__main__':
     tornado_curl.run()
+
+    # import cProfile
+    #
+    # cProfile.run("tornado_curl.run()", "prof.txt")
+    # import pstats
+    #
+    # p = pstats.Stats("prof.txt")
+    # p.sort_stats("time").print_stats()

@@ -274,11 +274,15 @@ class CurlAsyncHTTPClient(AsyncHTTPClient):
         # http://curl.haxx.se/libcurl/c/curl_easy_getinfo.html
         time_info = dict(
             queue=info["curl_start_ioloop_time"] - info["queue_start_time"],
+            # DNS 解析时间
             namelookup=curl.getinfo(pycurl.NAMELOOKUP_TIME),
+            # Create conn time
             connect=curl.getinfo(pycurl.CONNECT_TIME),
             appconnect=curl.getinfo(pycurl.APPCONNECT_TIME),
             pretransfer=curl.getinfo(pycurl.PRETRANSFER_TIME),
             starttransfer=curl.getinfo(pycurl.STARTTRANSFER_TIME),
+            # 下载时间速度
+            speed_download=curl.getinfo(pycurl.SPEED_DOWNLOAD),
             total=curl.getinfo(pycurl.TOTAL_TIME),
             redirect=curl.getinfo(pycurl.REDIRECT_TIME),
         )

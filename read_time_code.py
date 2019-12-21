@@ -16,18 +16,19 @@ def file_time_diff():
 
 
 def main():
-    if file_time_diff():
-        tornado_curl.run()
+    # if file_time_diff():
+    #     tornado_curl.run()
 
     with open(url_time_info, mode='r')as f:
         time_info = json.load(f)
         if len(sys.argv) >= 3:
             try:
-                return time_info.get(sys.argv[1])['backend_real'].get(sys.argv[2]).get('code', 0)
+                return time_info.get(sys.argv[1])['backend_real'].get(sys.argv[2]).get('code', "")
             except Exception as e:
-                return 0
+                print(e)
+                return ""
         else:
-            return time_info.get(sys.argv[1]).get('code', 0)
+            return time_info.get(sys.argv[1]).get('code', "")
 
 
 print(main())

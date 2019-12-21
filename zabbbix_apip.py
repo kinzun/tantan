@@ -3,11 +3,13 @@ import re
 import json
 from collections import namedtuple
 from urllib.parse import urlparse
-from urllib.parse import unquote_plus
+from urllib.parse import unquote_plus, quote_plus
 
 import requests
 from bin.read_xlsx import ret_urls
 
+
+# https://github.com/lukecyca/pyzabbix
 
 class _NullHandler(logging.Handler):
     def emit(self, record):
@@ -275,6 +277,7 @@ class Moniter(object):
             "value_type": value_type,
             "delay": "60s",
             "inventory_link": 0,
+            "type": 7,  # 主动模式客户端
         }
         if value_type == 0:
             params.update({"units": "s"})
@@ -500,9 +503,9 @@ class Create_Batch(object):
             # if it.url[0] == 'https://me.baojia.com/':
             for name in code_toal_string():
                 try:
-                    itemname = name[0].format(it.url[0])
-                    key_name = name[1].format(it.url[0])
-                    item_create_(itemname, key_name)
+                    itemname_key = map(
+                        lambda x: x.format(it.url[0]) if "[" not in x else x.format(quote_plus(it.url[0])), name)
+                    item_create_(*itemname_key)
                 except Exception as e:
                     print(e)
 
@@ -511,7 +514,7 @@ class Create_Batch(object):
                     for name in code_toal_string(real_backend=True):
                         try:
                             itemname = name[0].format(i)
-                            key_name = name[1].format(it.url[0], i)
+                            key_name = name[1].format(quote_plus(it.url[0]), quote_plus(i))
                             item_create_(itemname, key_name)
                         except Exception as e:
                             print(e)
@@ -614,8 +617,8 @@ class Create_Batch(object):
                 drawtype_code = lambda x: 5 if "health_code" in x else 1
 
                 realend_items = [
-                    {'itemid': item.get('itemid'), 'yaxisside': yaxisside_code(i.get('name')),
-                     'drawtype': drawtype_code(i.get('name'))} for i
+                    {'itemid': item.get('itemid'), 'yaxisside': yaxisside_code(item.get('name')),
+                     'drawtype': drawtype_code(item.get('name'))} for i
                     in
                     items_real for item in i if item.get('name').startswith('real')]
 
@@ -684,8 +687,8 @@ class Create_Batch(object):
         all_itemid = (i.get('itemid') for i in zbix.item_get())
         for i in all_itemid:
             try:
-                # zbix.item_update(i, type=7)
-                zbix.item_update(i, delay="60s")
+                zbix.item_update(i, type=7)
+                # zbix.item_update(i, delay="60s")
             except Exception as e:
                 print(e)
 
@@ -708,17 +711,17 @@ if __name__ == '__main__':
 
     zbix = Moniter()
     zbix.hostid = "10452"
-    # for i
 
+    mutil_cr = Create_Batch()
     # mutil_cr.item_upde_()
 
-    # mutil_cr.crete_mhost_graph_()
     # mutil_cr.crate_batch_mhost()
+    mutil_cr.crete_mhost_graph_()
     # mutil_cr.create_ms_graph()
 
     # mutil_cr.items_del()
 
-    s = zbix.graph_get()
+    # s = zbix.graph_get()
 
     # s = zbix.item_get(name='cmdb')
 
