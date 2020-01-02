@@ -1,10 +1,10 @@
 import re
-from urllib.parse import unquote_plus, quote_plus
 import json
 import sys
 import os
 import time
 import asyncio
+from urllib.parse import unquote_plus, quote_plus
 from tornado.httpclient import AsyncHTTPClient
 from tornado.httpclient import HTTPClientError
 from bin.read_xlsx import ret_urls
@@ -48,7 +48,7 @@ class tornado_curl(object):
                 return response_
 
         except Exception as e:
-            pass
+            return response_
 
     @staticmethod
     async def real_fetch_async(http_client, res_urls):
@@ -78,7 +78,7 @@ class tornado_curl(object):
         """减少误报 ，错误重试2次"""
         i = 0
         response = ""
-        while i < 1:
+        while i < 2:
             try:
                 response = await  http_client.fetch(url_tuple.url[0], connect_timeout=10,
                                                     request_timeout=10)
@@ -92,6 +92,7 @@ class tornado_curl(object):
 
                 if 200 <= e.code < 500:
                     response.update(e.response.time_info)
+                    response.update(business_name=url_tuple.name)
         return response
 
     @staticmethod
@@ -125,12 +126,12 @@ class tornado_curl(object):
                     response.time_info['backend_real'] = readl
 
 
-
         except HTTPClientError as e:
 
             response = {"url": url_tuple.url[0], "code": e.code, "message": e.message, "total": ''}
             if 200 <= e.code < 500:
                 response.update(e.response.time_info)
+                response.update(business_name=url_tuple.name)
 
         else:
             pass
@@ -139,6 +140,7 @@ class tornado_curl(object):
             if hasattr(response, "time_info"):
                 response.time_info['url'] = url_tuple.url[0]
                 response.time_info['code'] = response.code
+                response.time_info['business_name'] = url_tuple.name
                 # response.time_info['body'] = Response(response.body).text
                 # DICT_INFO.append(response.time_info)
                 DICT_INFO[quote_plus(url_tuple.url[0])] = response.time_info
@@ -169,11 +171,11 @@ class tornado_curl(object):
         event_loop.close()
 
         with open(os.path.join(BASE_DIR, 'url_time_info.json'), mode='w', ) as f:
-            json.dump(DICT_INFO, f, sort_keys=True, indent=4)
+            json.dump(DICT_INFO, f, sort_keys=True, indent=4, ensure_ascii=False)
 
 
 def file_time_diff():
-    return time.time() - os.path.getctime(os.path.join(BASE_DIR), 'url_time_info') >= 30
+    return time.time() - os.path.getctime(os.path.join(BASE_DIR, 'url_time_info')) >= 30
 
 
 if __name__ == '__main__':
