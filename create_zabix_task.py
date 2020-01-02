@@ -394,7 +394,14 @@ if __name__ == '__main__':
     zbix = Moniter()
     zbix.hostid = "10452"
 
-    zbix.item_get()
+
+    Create_Batch.crate_batch_mhost()
+    Create_Batch.crete_mhost_graph_()
+    Create_Batch.create_trigger()
+
+
+
+
 
 
     # s = Create_Batch()
