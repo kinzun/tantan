@@ -12,7 +12,7 @@ pipenv = "==2018.11.26"
 pytz = "==2019.1"
 virtualenv = "==16.6.1"
 virtualenv-clone = "==0.5.3"
-Django = "==1.11.18"
+Django = "==2.2.24"
 PyMySQL = "==0.9.3"
 
 [requires]
