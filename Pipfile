@@ -8,7 +8,7 @@ verify_ssl = true
 [packages]
 certifi = "==2019.6.16"
 django-multiselectfield = "==0.1.8"
-pipenv = "==2018.11.26"
+pipenv = "==2022.1.8"
 pytz = "==2019.1"
 virtualenv = "==16.6.1"
 virtualenv-clone = "==0.5.3"
