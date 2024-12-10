@@ -25,7 +25,7 @@ pandocfilters==1.4.2
 pycares==3.0.0
 pycparser==2.19
 pycurl==7.43.0.3
-Pygments==2.4.2
+Pygments==2.7.4
 pyrsistent==0.15.5
 requests==2.22.0
 six==1.13.0
